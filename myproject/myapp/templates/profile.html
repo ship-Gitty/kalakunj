@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    
+    <!-- Load static tag to use static files -->
+    {% load static %}
+    
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>{{ user.username }}'s Profile</h1>
+    </header>
+
+    <section class="profile-section">
+        <!-- Display profile picture if it exists, otherwise show default message -->
+        <div class="profile-picture">
+            {% if user.profile_picture %}
+                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="150" height="150">
+            {% else %}
+                <p>No profile picture available.</p>
+            {% endif %}
+        </div>
+
+        <!-- Form to upload or update profile picture -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="id_profile_picture">Upload Profile Picture:</label>
+            {{ form.profile_picture }}
+            <button type="submit">Update Profile Picture</button>
+        </form>
+    </section>
+
+    <section class="designs-section">
+        <h2>Your Designs</h2>
+        <div class="design-list">
+            {% if designs %}
+                {% for design in designs %}
+                    <div class="design-item">
+                        <h3>{{ design.title }}</h3>
+                        <p>{{ design.description }}</p>
+                        <p>Price: ${{ design.price }}</p>
+                        <p>File Type: {{ design.file_type }}</p>  <!-- Display file type -->
+                        
+                        <!-- Display the file if it's an image -->
+                        {% if design.file_type in "png jpeg jpg gif svg" %}
+                        <img src="{{ design.file.url }}" alt="Design Image" width="150" height="150">
+                    {% else %}
+                        <p>File uploaded but not an image (File Type: {{ design.file_type }}).</p>
+                    {% endif %}
+                    
+                        
+                        <a href="{% url 'design_detail' design.id %}">View Details</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>You haven't uploaded any designs yet.</p>
+            {% endif %}
+        </div>
+        
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Your Website Name. All rights reserved.</p>
+    </footer>
+</body>
+</html>

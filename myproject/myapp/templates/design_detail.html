@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ design.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<header>
+    <h1>{{ design.title }}</h1>
+</header>
+
+<div class="design-detail">
+    <p>{{ design.description }}</p>
+    <p>Price: ${{ design.price }}</p>
+    <p>Status: {{ design.status }}</p>
+
+    <!-- Include forms for review and message -->
+    <h3>Leave a Review</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ review_form.as_p }}
+        <button type="submit">Submit Review</button>
+    </form>
+
+    <h3>Send a Message</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ message_form.as_p }}
+        <button type="submit">Send Message</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2024 Your Website Name. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

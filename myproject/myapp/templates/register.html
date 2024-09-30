@@ -4,38 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-
-    <!-- Load static files for CSS -->
     {% load static %}
-    
-    <!-- Link to your CSS file -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
 <header>
-    <div class="logo">
-        <h1>Your Logo</h1> <!-- Replace with an image if needed -->
-    </div>
-    <nav class="navbar">
-        <ul>
-            <li><a href="{% url 'marketplace' %}">Marketplace</a></li>
-            <li><a href="{% url 'upload_design' %}">Upload Design</a></li>
-            <li><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-        </ul>
-    </nav>
+    <h1>Register</h1>
 </header>
 
-<!-- Main registration form -->
 <div class="auth-container">
-    <h2>Register</h2>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        {% if form.errors %}
-            <p class="error">Please correct the errors below.</p>
-        {% endif %}
+        {{ form.as_p }}  <!-- Render the form fields -->
         <button type="submit">Register</button>
     </form>
     <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>

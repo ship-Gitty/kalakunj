@@ -3,54 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design Marketplace</title>
+    <title>Marketplace</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
 <header>
-    <div class="logo">
-        <h1>Your Logo</h1> <!-- Replace with an image tag for an actual logo -->
-    </div>
-    <nav class="navbar">
+    <h1>Marketplace</h1>
+    <nav>
         <ul>
             <li><a href="{% url 'marketplace' %}">Marketplace</a></li>
-            <li><a href="{% url 'upload_design' %}">Upload Design</a></li>
-            <li><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="{% url 'upload_design' %}">Upload Design</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
         </ul>
-        <div class="auth-links">
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'register' %}">Register</a>
-        </div>
     </nav>
 </header>
 
-<main>
-    <section class="intro">
-        <h2>Welcome to the Design Marketplace</h2>
-        <p>Explore and purchase amazing designs from talented artists!</p>
-    </section>
-
-    <section class="designs">
-        <h3>Available Designs</h3>
-        <ul class="design-list">
-            {% for design in designs %}
-                <li class="design-item">
-                    <a href="{% url 'design_detail' design.id %}">
-                        <div class="design-info">
-                            <h4>{{ design.title }}</h4>
-                            <p>Price: ${{ design.price }}</p>
-                        </div>
-                    </a>
-                </li>
-            {% empty %}
-                <li class="design-item">No designs available at the moment.</li>
-            {% endfor %}
-        </ul>
-    </section>
-</main>
+<!-- Loop through all designs and display each one -->
+<div class="design-list">
+    {% for design in designs %}
+        <div class="design-item">
+            <h3>{{ design.title }}</h3>
+            <p>{{ design.description }}</p>
+            <p>Price: ${{ design.price }}</p>
+            <p>File Type: {{ design.file_type }}</p>  <!-- Display file type -->
+            {% if design.file %}
+                <img src="{{ design.file.url }}" alt="{{ design.title }} image" width="500" height="500">
+            {% else %}
+                <p>No image available.</p>
+            {% endif %}
+            <a href="{% url 'design_detail' design.id %}">View Details</a>
+        </div>
+    {% empty %}
+        <p>No designs available at the moment.</p>
+    {% endfor %}
+</div>
 
 <footer>
     <p>&copy; 2024 Your Website Name. All rights reserved.</p>

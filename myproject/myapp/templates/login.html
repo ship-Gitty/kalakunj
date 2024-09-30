@@ -10,28 +10,20 @@
 <body>
 
 <header>
-    <div class="logo">
-        <h1>Your Logo</h1> <!-- Replace with an image if needed -->
-    </div>
-    <nav class="navbar">
-        <ul>
-            <li><a href="{% url 'marketplace' %}">Marketplace</a></li>
-            <li><a href="{% url 'upload_design' %}">Upload Design</a></li>
-            <li><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-        </ul>
-    </nav>
+    <h1>Login</h1>
 </header>
 
-<!-- Main login form -->
 <div class="auth-container">
-    <h2>Login</h2>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        {% if form.errors %}
-            <p class="error">Invalid username or password. Please try again.</p>
-        {% endif %}
+        <div class="form-group">
+            <label for="username">Username:</label>
+            {{ form.username }}  <!-- Render the username field -->
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            {{ form.password }}  <!-- Render the password field -->
+        </div>
         <button type="submit">Login</button>
     </form>
     <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
