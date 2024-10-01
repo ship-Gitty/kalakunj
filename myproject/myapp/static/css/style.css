@@ -4,18 +4,49 @@ body, html {
     padding: 0;
     font-family: 'Arial', sans-serif;
     height: 100%;
-    overflow: hidden; /* Prevent scrollbars from appearing */
+    overflow-x: hidden;/* Prevent scrollbars from appearing */
+    font-size: 100%; /* Default size */
+}
+
+/* Hide scroll bar */
+body {
+    overflow-y: scroll; /* Enable vertical scrolling */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
 }
 
 /* Video Background */
 #background-video {
     position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    z-index: -1;  /* Ensure video stays behind other content */
+    right : 0;
+    bottom : 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover; /* Ensure video covers the entire area while maintaining aspect ratio */
+    z-index: -1;  /* Ensure video stays behind other content */
+}
+
+/* Header Styles */
+header {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.8);  /* Slightly transparent background */
+    padding: 20px;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Logo Styles */
@@ -30,21 +61,10 @@ body, html {
 }
 
 
-/* Header Styles */
-header {
-    position: relative;
-    z-index: 1;
-    background-color: rgba(255, 255, 255, 0.8);  /* Slightly transparent background */
-    padding: 20px;
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .logo h1 {
     margin: 0;
     font-size: 45px;
+    font-size: 2.5rem; /* Larger heading */
 }
 
 .navbar {
@@ -53,10 +73,7 @@ header {
 }
 
 .navbar ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
+    display: none;
 }
 
 .navbar ul li {
@@ -71,6 +88,15 @@ header {
 
 .navbar ul li a:hover {
     text-decoration: underline;
+}
+
+/* Menu toggle button for mobile */
+.menu-toggle {
+    display: block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
 }
 
 /* Auth Links */
@@ -139,20 +165,20 @@ a:hover {
 }
 
 /* Main Section */
-/* Main Section */
 main {
-    margin-top: 0;  /* Removed margin to align with the video */
+    margin-top: 100vh; /* Ensure designs are moved below the video background */
     padding: 40px 20px;
-    position: relative; /* Ensure the main section is positioned properly */
-    z-index: 1; /* Bring main content above the video */
+    z-index: 1; /* Content above the video */
+    position: relative;
 }
+
 
 .intro {
     text-align: center;
     margin-bottom: 30px;
 }
 
-/* Designs Section */
+* Designs Section */
 .designs {
     max-width: 1000px;
     margin: 40px auto;
@@ -167,7 +193,7 @@ main {
     list-style-type: none;
     padding: 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
@@ -176,24 +202,25 @@ main {
 /* Container for the design item */
 /* Adjust the design item container */
 /* Design Items */
+/* Design Container */
 .design-item {
-    background-color: rgba(255, 255, 255, 0.8);  /* Transparent background to blend with video */
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-    margin: 10px;
     text-align: center;
     width: 250px;
     height: 400px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
+    flex: 1 1 calc(33.333% - 20px);}
 
 .design-item:hover {
     transform: scale(1.05);
 }
+
 
 /* Image styling for design */
 /* Image should fit inside the container */
@@ -208,8 +235,6 @@ main {
     background-color: #0056b3;
 }
 
-
-
 .view-details-btn {
     margin-top: 10px;
     background-color: #007bff;
@@ -221,8 +246,6 @@ main {
     transition: background-color 0.3s;
     display: block;
 }
-
-
 
 /* Styling for the View Details button */
 .view-details-btn {
@@ -240,8 +263,6 @@ main {
 .view-details-btn:hover {
     background-color: #0056b3;
 }
-
-
 
 /* Design Info */
 .design-info {
@@ -272,6 +293,7 @@ main {
 .design-item .view-details:hover {
     background-color: #0056b3;
 }
+
 /* Ensure button fits well with design */
 .design-item a {
     margin-top: 10px;
@@ -287,6 +309,7 @@ main {
 .design-item a:hover {
     background-color: #0056b3;
 }
+
 /* Button container styling */
 .button-container {
     display: flex;
@@ -314,7 +337,8 @@ main {
 
 /* Ensure proper spacing between the design item content and buttons */
 .design-item {
-    margin-bottom: 20px; /* Space below each design item */
+    width: 100%;
+    max-width: 250px;
 }
 
 /* Button styling */
@@ -347,7 +371,6 @@ main {
     color: red;
 }
 
-
 /* Footer */
 footer {
     position: relative;
@@ -355,12 +378,32 @@ footer {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     text-align: center;
+    margin-top: 40px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    h1 {
+        font-size: 2rem; /* Smaller heading for mobile */
+    }
+
     header, .navbar {
         flex-direction: column;
+        text-align: center;
+    }
+
+    .design-item {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .logo h1 {
+        font-size: 30px;
+    }
+
+    button, .view-details-btn {
+        padding: 10px;
+        font-size: 16px;
     }
 
     .auth-container {
@@ -373,6 +416,29 @@ footer {
     }
 
     .design-item {
-        width: 90%;
+        flex: 1 1 calc(50% - 20px); /* 2 items per row */
+    }
+
+    .navbar ul {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: none; /* Hide toggle on larger screens */
+    }
+}
+
+/* For very small screens (less than 480px) */
+@media (max-width: 480px) {
+    .navbar ul {
+        flex-direction: column;
+    }
+
+    .logo h1 {
+        font-size: 24px;
+    }
+
+    .design-item {
+        flex: 1 1 100%; /* 1 item per row */
     }
 }

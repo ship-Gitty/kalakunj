@@ -25,7 +25,7 @@ def marketplace(request):
 def design_detail(request, design_id):
     design = get_object_or_404(Design, id=design_id)
     return render(request, 'design_detail.html', {'design': design})
-
+    
 # View to upload designs (only accessible by artists)
 
 @login_required  # Ensure only logged-in users can upload designs

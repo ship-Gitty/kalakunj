@@ -21,16 +21,19 @@ from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('', marketplace, name='marketplace'),
-    path('design/<int:design_id>/', design_detail, name='design_detail'),
     path('upload/', upload_design, name='upload_design'),
     path('admin_dashboard/', admin_dashboard, name='admin_dashboard'),
+
     path('register/', register_view, name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', logout_view, name='logout'),  # Add this line
+
     path('profile/', profile_view, name='profile'),
     path('update_design/<int:design_id>/', update_design, name='update_design'),
     path('delete_design/<int:design_id>/', delete_design, name='delete_design'),
+
     path('design/<int:design_id>/', views.design_detail, name='design_detail'),
+    
     path('checkout/<int:design_id>/', views.checkout, name='checkout'),  # Add this line
     path('esewa-payment/<int:design_id>/', views.esewa_payment, name='esewa_payment'),
     path('khalti-payment/<int:design_id>/', views.khalti_payment, name='khalti_payment'),
