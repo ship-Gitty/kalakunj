@@ -26,25 +26,28 @@
     </nav>
 </header>
 
-<!-- Loop through all designs and display each one -->
-<div class="design-list">
-    {% for design in designs %}
-        <div class="design-item">
-            <h3>{{ design.title }}</h3>
-            <p>{{ design.description }}</p>
-            <p>Price: ${{ design.price }}</p>
-            <p>File Type: {{ design.file_type }}</p>  <!-- Display file type -->
-            {% if design.file %}
-                <img src="{{ design.file.url }}" alt="{{ design.title }} image" width="500" height="500">
-            {% else %}
-                <p>No image available.</p>
-            {% endif %}
-            <a href="{% url 'design_detail' design.id %}">View Details</a>
-        </div>
-    {% empty %}
-        <p>No designs available at the moment.</p>
-    {% endfor %}
-</div>
+<main>
+    <div class="design-list">
+        {% for design in designs %}
+            <div class="design-item">
+                <h3>{{ design.title }}</h3>
+                <p>{{ design.description }}</p>
+                <p>Price: ${{ design.price }}</p>
+                <p>File Type: {{ design.file_type }}</p>
+
+                {% if design.file_type in "png jpeg jpg gif svg" %}
+                    <img src="{{ design.file.url }}" alt="{{ design.title }} Image" class="design-image">
+                {% else %}
+                    <p>No image available for this file type ({{ design.file_type }}).</p>
+                {% endif %}
+
+                <div class="button-container">
+                    <a href="{% url 'design_detail' design.id %}" class="view-details-btn">View Details</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</main>
 
 <footer>
     <p>&copy; 2024 Your Website Name. All rights reserved.</p>

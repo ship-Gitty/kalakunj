@@ -11,6 +11,8 @@ from .views import (
     CustomLoginView,
     logout_view,
     profile_view,
+    update_design,
+    delete_design
 )
 from django.contrib.auth.views import LogoutView
 
@@ -23,6 +25,8 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', logout_view, name='logout'),  # Add this line
     path('profile/', profile_view, name='profile'),
+    path('update_design/<int:design_id>/', update_design, name='update_design'),
+    path('delete_design/<int:design_id>/', delete_design, name='delete_design'),
 ]
 
 

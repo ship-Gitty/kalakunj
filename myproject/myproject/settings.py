@@ -128,8 +128,8 @@ STATICFILES_DIRS = [
 
 # Media files (uploaded images for profile pictures, designs, etc.)
 # Correct way to handle file paths
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type

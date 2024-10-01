@@ -104,7 +104,7 @@ button:hover {
 }
 
 a {
-    color: #f5f7f8;
+    color: #000000;
     text-align: center;
     margin-top: 10px;
 }
@@ -142,30 +142,134 @@ main {
     flex-wrap: wrap;
 }
 
+/* Design Container - Profile & Marketplace */
+/* Ensure proper container for design items */
+/* Container for the design item */
+/* Adjust the design item container */
 .design-item {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     margin: 10px;
     padding: 20px;
-    width: 250px;
+    width: 250px;  /* Keep the width consistent */
+    height: 400px; /* Set a fixed height for all containers */
     text-align: center;
     transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  /* Ensure content is spaced correctly */
 }
+
 
 .design-item:hover {
     transform: scale(1.05);
 }
 
-.design-info h4 {
-    margin: 0;
-    color: #007bff;
+/* Image styling for design */
+/* Image should fit inside the container */
+.design-item .design-image {
+    max-width: 100%;  /* Fit width */
+    max-height: 200px; /* Limit height */
+    object-fit: cover; /* Maintain aspect ratio while covering container */
+    border-radius: 10px;
 }
 
+
+/* Styling for the View Details button */
+.view-details-btn {
+    margin-top: 10px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    display: block;  /* Block display for better alignment */
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.view-details-btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+/* Design Info */
+.design-info {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Ensure design info is properly spaced */
 .design-info p {
     margin: 5px 0;
     font-size: 16px;
 }
+
+.design-item .view-details {
+    margin-top: auto;  /* Push button to the bottom of the container */
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.design-item .view-details:hover {
+    background-color: #0056b3;
+}
+/* Ensure button fits well with design */
+.design-item a {
+    margin-top: 10px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.design-item a:hover {
+    background-color: #0056b3;
+}
+/* Button container styling */
+.button-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center align buttons */
+    margin-top: 10px; /* Space above the buttons */
+}
+
+/* General button styling */
+.view-details-btn {
+    margin-top: 10px;
+    text-decoration: none;
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Text color */
+    padding: 8px 15px; /* Add padding for better appearance */
+    border-radius: 5px; /* Rounded corners */
+    width: 100%; /* Fit to the width of the container */
+    text-align: center; /* Center text */
+    transition: background-color 0.3s; /* Smooth hover transition */
+}
+
+.view-details-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Ensure proper spacing between the design item content and buttons */
+.design-item {
+    margin-bottom: 20px; /* Space below each design item */
+}
+
+
 
 /* Footer */
 footer {
@@ -173,9 +277,11 @@ footer {
     color: white;
     text-align: center;
     padding: 20px;
-    position: relative;
+    position: relative; /* Change to relative */
     bottom: 0;
     width: 100%;
+    /* Optional styling for a cleaner look */
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive Design */

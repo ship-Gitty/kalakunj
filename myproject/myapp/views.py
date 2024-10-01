@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import DesignForm, ReviewForm, MessageForm
@@ -113,7 +114,27 @@ def upload_design(request):
 
     return render(request, 'upload_design.html', {'form': form})
 
+@login_required
+def update_design(request, design_id):
+    design = get_object_or_404(Design, id=design_id)
+    if request.user != design.artist:
+        return redirect('profile')  # Redirect if the user is not the owner
 
+    if request.method == 'POST':
+        form = DesignForm(request.POST, request.FILES, instance=design)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Redirect to profile after successful update
+    else:
+        form = DesignForm(instance=design)
+    return render(request, 'update_design.html', {'form': form, 'design': design})
+
+@login_required
+def delete_design(request, design_id):
+    design = get_object_or_404(Design, id=design_id)
+    if request.user == design.artist:
+        design.delete()
+    return redirect('profile')  # Redirect to profile after successful deletion
 
 @login_required
 def review_design(request, design_id):
