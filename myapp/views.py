@@ -4,6 +4,7 @@ import hmac
 import json
 from uuid import uuid4
 
+import requests
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login, logout
@@ -48,10 +49,10 @@ def upload_design(request):
 
 # View for the admin dashboard (only accessible by admins)
 @login_required
-def admin_dashboard(request): 
+def admin_dashboard(request):
     if request.user.role != 'admin':  # Check if the logged-in user is an admin
         return redirect('marketplace')  # Redirect to marketplace if not admin
-    
+
     # Here, you can add logic to manage users, designs, etc.
     return render(request, 'admin_dashboard.html')
 
@@ -101,7 +102,7 @@ def profile_view(request):
     return render(request, 'profile.html', {'user': user, 'designs': designs, 'form': form})
 
 
-  
+
 
 @login_required
 def upload_design(request):
@@ -260,7 +261,7 @@ class DesignDetailView(generic.TemplateView):
             'transaction_uuid': transaction_uuid,
             'url': hash_in_base64,
             'product_code': settings.ESEWA_CONFIG.get("product_code"),
-            'success_url': f'{self.request.scheme}://{self.request.get_host()}/payment-success/{design.pk}/esewa/',
+            'success_url': f'{self.request.scheme}://{self.request.get_host()}/design/{design.pk}/payment-success/esewa',
             'failure_url': 'asdas',
         }
 
@@ -284,21 +285,56 @@ class PaymentSuccessView(generic.TemplateView):
         payment_method = self.kwargs['payment_method']
         if payment_method == 'esewa':
             esewa_data = self.request.GET.get('data')
-            esewa_data_json = json.loads(base64.b64decode(esewa_data).decode())
-            self._create_esewa_transaction(
-                self.get_object(),
-                esewa_data_json,
-                request
-            )
+            data_json = json.loads(base64.b64decode(esewa_data).decode())
+        elif payment_method == 'khalti':
+            data_json= dict(request.GET)
+        else:
+            data_json= {}
+        self._create_transaction(
+            self.get_object(),
+            data_json,
+            request,
+            payment_method
+        )
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
 
-    def _create_esewa_transaction(self, design, esewa_data_json, request):
+    def _create_transaction(self, design, data_json, request, payment_method):
         Transaction.objects.create(
             design=design,
             customer=request.user,
             amount=design.price,
-            payment_method='esewa',
+            payment_method=payment_method,
             status='completed',
-            response=esewa_data_json
+            response=data_json
         )
+
+
+def khalti_pay(request, design_id):
+    design = get_object_or_404(Design, id=design_id)
+    payload = json.dumps({
+        "return_url": f'{request.scheme}://{request.get_host()}/design/{design.pk}/payment-success/khalti',
+        "website_url": "https://example.com/",
+        "amount": f"{design.price * 100}",
+        "purchase_order_id": str(uuid4()),
+        "purchase_order_name": "test",
+        "customer_info": {
+            "name": "Ram Bahadur",
+            "email": "test@khalti.com",
+            "phone": "9800000001"
+        }
+    })
+    headers = {
+        'Authorization': settings.KHALTI_CONFIG.get('secret_key'),
+        'Content-Type': 'application/json',
+    }
+
+    response = requests.request(
+        "POST",
+        settings.KHALTI_CONFIG.get('initiate_url'),
+        headers=headers,
+        data=payload
+    )
+    if response.status_code == 200:
+        response_json = response.json()
+        return redirect(response_json['payment_url'])

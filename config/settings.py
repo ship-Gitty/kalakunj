@@ -149,14 +149,9 @@ ESEWA_CONFIG = {
     'secret_key': '8gBm/:&EnhH.1/q'
 }
 
-# Khalti credentials
-KHALTI_SECRET_KEY = 'your_khalti_secret_key'
-
-
+# Khalit CONFIG
+# -----------------------------------------------------------
 KHALTI_CONFIG = {
-    'PUBLIC_KEY': 'your_khalti_public_key',
-    'SECRET_KEY': 'your_khalti_secret_key',
-    'PAYMENT_URL': 'https://khalti.com/api/v2/payment',
+    'initiate_url': 'https://a.khalti.com/api/v2/epayment/initiate/',
+    'secret_key': 'key live_secret_key_68791341fdd94846a146f0457ff7b455'
 }
-
-# Include any additional configuration based on the payment provider's documentation.

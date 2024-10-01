@@ -41,6 +41,9 @@
                 <input type="hidden" id="signature" name="signature" value="{{ esewa.signature }}" required>
                 <input value="Pay with Esewa" type="submit">
             </form>
+            <a href="{% url 'khalti_pay' design.pk %}">
+                <button name="payment_method" value="khalti" class="btn">Pay with Khalti</button>
+            </a>
         </div>
     </div>
 </main>

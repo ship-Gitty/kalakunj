@@ -28,6 +28,11 @@ urlpatterns = [
         name='design_detail'
     ),
     path(
+        'design/<int:design_id>/khalti-pay',
+        views.khalti_pay,
+        name='khalti_pay'
+    ),
+    path(
         'design/<int:design_id>/payment-success/<str:payment_method>',
         views.PaymentSuccessView.as_view(),
         name='payment_success'
