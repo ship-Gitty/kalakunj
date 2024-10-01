@@ -2,6 +2,7 @@
 
 # myapp/urls.py
 from django.urls import path
+from . import views
 from .views import (
     marketplace,
     design_detail,
@@ -14,6 +15,8 @@ from .views import (
     update_design,
     delete_design
 )
+from .views import esewa_payment, khalti_payment, payment_success, payment_failed
+
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -27,6 +30,13 @@ urlpatterns = [
     path('profile/', profile_view, name='profile'),
     path('update_design/<int:design_id>/', update_design, name='update_design'),
     path('delete_design/<int:design_id>/', delete_design, name='delete_design'),
+    path('design/<int:design_id>/', views.design_detail, name='design_detail'),
+    path('checkout/<int:design_id>/', views.checkout, name='checkout'),  # Add this line
+    path('esewa-payment/<int:design_id>/', views.esewa_payment, name='esewa_payment'),
+    path('khalti-payment/<int:design_id>/', views.khalti_payment, name='khalti_payment'),
+    path('payment-success/<int:design_id>/<str:payment_method>/', views.payment_success, name='payment_success'),
+    path('payment-failure/<int:design_id>/<str:payment_method>/', views.payment_failed, name='payment_failed'),
+
 ]
 
 

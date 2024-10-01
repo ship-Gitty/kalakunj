@@ -3,40 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ design.title }}</title>
+    <title>{{ design.title }} Details</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+    <header>
+        <h1>{{ design.title }}</h1>
+    </header>
 
-<header>
-    <h1>{{ design.title }}</h1>
-</header>
+    <main class="design-detail">
+        <div class="design-image">
+            <img src="{{ design.file.url }}" alt="{{ design.title }} Image">
+        </div>
+        <div class="design-info">
+            <h2>Description</h2>
+            <p>{{ design.description }}</p>
+            <p>Price: ${{ design.price }}</p>
+            <p>File Type: {{ design.file_type }}</p>
+            <p>File Size: {{ design.file_size }} bytes</p>
+            
+            <!-- Payment Options -->
+            <div class="payment-options">
+                <h3>Buy Now</h3>
+                <p>Select your preferred payment method:</p>
+                <form action="{% url 'checkout' design.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" name="payment_method" value="esewa" class="btn">Pay with eSewa</button>
+                    <button type="submit" name="payment_method" value="khalti" class="btn">Pay with Khalti</button>
+                </form>                
+            </div>
+        </div>
+    </main>
 
-<div class="design-detail">
-    <p>{{ design.description }}</p>
-    <p>Price: ${{ design.price }}</p>
-    <p>Status: {{ design.status }}</p>
-
-    <!-- Include forms for review and message -->
-    <h3>Leave a Review</h3>
-    <form method="POST">
-        {% csrf_token %}
-        {{ review_form.as_p }}
-        <button type="submit">Submit Review</button>
-    </form>
-
-    <h3>Send a Message</h3>
-    <form method="POST">
-        {% csrf_token %}
-        {{ message_form.as_p }}
-        <button type="submit">Send Message</button>
-    </form>
-</div>
-
-<footer>
-    <p>&copy; 2024 Your Website Name. All rights reserved.</p>
-</footer>
-
+    <footer>
+        <p>&copy; 2024 कलाकुंज. All rights reserved.</p>
+    </footer>
 </body>
 </html>

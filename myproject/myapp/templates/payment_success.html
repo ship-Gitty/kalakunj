@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Payment Successful</h1>
+    </header>
+    
+    <main class="payment-success">
+        <h2>Thank you for your purchase!</h2>
+        <p>You have successfully purchased the design: <strong>{{ design.title }}</strong></p>
+        <p>Payment Method: <strong>{{ payment_method }}</strong></p>
+        <p>We hope you enjoy your design.</p>
+
+        <!-- Button to go back to the marketplace -->
+        <a href="{% url 'marketplace' %}" class="btn">Back to Marketplace</a>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 कलाकुंज. All rights reserved.</p>
+    </footer>
+</body>
+</html>

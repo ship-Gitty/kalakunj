@@ -1,25 +1,50 @@
 /* General Styles */
-body {
-    font-family: 'Arial', sans-serif;
+body, html {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    font-family: 'Arial', sans-serif;
+    height: 100%;
+    overflow: hidden; /* Prevent scrollbars from appearing */
 }
+
+/* Video Background */
+#background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;  /* Ensure video stays behind other content */
+    object-fit: cover; /* Ensure video covers the entire area while maintaining aspect ratio */
+}
+
+/* Logo Styles */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 100px;
+    margin-right: 40px;
+}
+
 
 /* Header Styles */
 header {
-    background-color: #007bff;
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.8);  /* Slightly transparent background */
     padding: 20px;
+    color: #333;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: white;
 }
 
 .logo h1 {
     margin: 0;
-    font-size: 24px;
+    font-size: 45px;
 }
 
 .navbar {
@@ -114,8 +139,12 @@ a:hover {
 }
 
 /* Main Section */
+/* Main Section */
 main {
+    margin-top: 0;  /* Removed margin to align with the video */
     padding: 40px 20px;
+    position: relative; /* Ensure the main section is positioned properly */
+    z-index: 1; /* Bring main content above the video */
 }
 
 .intro {
@@ -146,19 +175,19 @@ main {
 /* Ensure proper container for design items */
 /* Container for the design item */
 /* Adjust the design item container */
+/* Design Items */
 .design-item {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.8);  /* Transparent background to blend with video */
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     margin: 10px;
-    padding: 20px;
-    width: 250px;  /* Keep the width consistent */
-    height: 400px; /* Set a fixed height for all containers */
     text-align: center;
-    transition: transform 0.3s ease-in-out;
+    width: 250px;
+    height: 400px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;  /* Ensure content is spaced correctly */
+    justify-content: space-between;
 }
 
 
@@ -169,11 +198,30 @@ main {
 /* Image styling for design */
 /* Image should fit inside the container */
 .design-item .design-image {
-    max-width: 100%;  /* Fit width */
-    max-height: 200px; /* Limit height */
-    object-fit: cover; /* Maintain aspect ratio while covering container */
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: cover;
     border-radius: 10px;
 }
+
+.view-details-btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+.view-details-btn {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    display: block;
+}
+
 
 
 /* Styling for the View Details button */
@@ -269,19 +317,44 @@ main {
     margin-bottom: 20px; /* Space below each design item */
 }
 
+/* Button styling */
+.btn {
+    display: inline-block;
+    background-color: #0050a5;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Payment Success / Failure styling */
+.payment-success, .payment-failed {
+    text-align: center;
+    margin: 50px auto;
+    max-width: 600px;
+}
+
+.payment-success h2, .payment-failed h2 {
+    color: green; /* You can change the color based on your preference */
+}
+
+.payment-failed h2 {
+    color: red;
+}
 
 
 /* Footer */
 footer {
-    background-color: #007bff;
-    color: white;
-    text-align: center;
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
-    position: relative; /* Change to relative */
-    bottom: 0;
-    width: 100%;
-    /* Optional styling for a cleaner look */
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 /* Responsive Design */

@@ -134,3 +134,24 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# eSewa credentials
+ESEWA_MERCHANT_CODE = 'your_merchant_code'
+
+# Khalti credentials
+KHALTI_SECRET_KEY = 'your_khalti_secret_key'
+
+# Example (you will need to fill in actual details based on eSewa/Khalti's documentation):
+ESEWA_CONFIG = {
+    'MERCHANT_ID': 'your_esewa_merchant_id',
+    'MERCHANT_SECRET': 'your_esewa_secret_key',
+    'PAYMENT_URL': 'https://esewa.com.np/payment',
+}
+
+KHALTI_CONFIG = {
+    'PUBLIC_KEY': 'your_khalti_public_key',
+    'SECRET_KEY': 'your_khalti_secret_key',
+    'PAYMENT_URL': 'https://khalti.com/api/v2/payment',
+}
+
+# Include any additional configuration based on the payment provider's documentation.

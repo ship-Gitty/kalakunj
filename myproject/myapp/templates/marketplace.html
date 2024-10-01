@@ -3,14 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketplace</title>
+    <title>कलाकुंज</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
+<!-- Video Background -->
+<video autoplay muted loop id="background-video">
+    <source src="{% static 'videos/kalakunj_background.mp4' %}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<!-- Header -->
 <header>
-    <h1>Marketplace</h1>
+    <div class="logo">
+        <img src="{% static 'images/logo.png' %}" alt="Kalakunj Logo" class="logo-img">
+        <h1>कलाकुंज</h1>
+    </div>
     <nav>
         <ul>
             <li><a href="{% url 'marketplace' %}">Marketplace</a></li>
@@ -26,31 +36,33 @@
     </nav>
 </header>
 
+<!-- Main Section (Designs) -->
 <main>
-    <div class="design-list">
+    <div class="design-list">  <!-- Moved here directly below the video -->
         {% for design in designs %}
             <div class="design-item">
                 <h3>{{ design.title }}</h3>
                 <p>{{ design.description }}</p>
-                <p>Price: ${{ design.price }}</p>
+                <p>Price: Rs.{{ design.price }}/-</p>
                 <p>File Type: {{ design.file_type }}</p>
 
+                <!-- Display the file if it's an image -->
                 {% if design.file_type in "png jpeg jpg gif svg" %}
                     <img src="{{ design.file.url }}" alt="{{ design.title }} Image" class="design-image">
                 {% else %}
                     <p>No image available for this file type ({{ design.file_type }}).</p>
                 {% endif %}
 
-                <div class="button-container">
-                    <a href="{% url 'design_detail' design.id %}" class="view-details-btn">View Details</a>
-                </div>
+                <!-- The View Details button should always be rendered -->
+                <a href="{% url 'design_detail' design.id %}" class="view-details-btn">View Details</a>
             </div>
         {% endfor %}
     </div>
 </main>
 
+<!-- Footer -->
 <footer>
-    <p>&copy; 2024 Your Website Name. All rights reserved.</p>
+    <p>&copy; 2024 कलाकुंज. All rights reserved.</p>
 </footer>
 
 </body>

@@ -7,8 +7,9 @@ from django.contrib.auth.views import LoginView
 from .forms import CustomUserCreationForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user_model, login, authenticate, logout
-from .models import Design, Review, Message, User
+from .models import Design, Review, Message, User, Transaction
 from django.contrib import messages
+from django.conf import settings
 
 
 
@@ -135,6 +136,66 @@ def delete_design(request, design_id):
     if request.user == design.artist:
         design.delete()
     return redirect('profile')  # Redirect to profile after successful deletion
+
+@login_required
+def checkout(request, design_id):
+    design = get_object_or_404(Design, id=design_id)
+    if request.method == "POST":
+        # Here you would integrate payment gateways (eSewa, Khalti)
+        payment_method = request.POST.get('payment_method')
+        if payment_method == "esewa":
+            return redirect('esewa_payment', design_id=design_id)
+        elif payment_method == "khalti":
+            return redirect('khalti_payment', design_id=design_id)
+    return render(request, 'checkout.html', {'design': design})
+
+# eSewa Payment View
+@login_required
+def esewa_payment(request, design_id):
+    design = get_object_or_404(Design, id=design_id)
+
+    # eSewa API setup and payment URL
+    esewa_payment_url = "https://esewa.com.np/#/home"  # replace with eSewa API URL
+    esewa_success_url = request.build_absolute_uri(f'/esewa-payment-success/{design_id}')
+    esewa_failure_url = request.build_absolute_uri(f'/esewa-payment-failure/{design_id}')
+
+    # Redirect user to eSewa's checkout page
+    return redirect(esewa_payment_url)
+
+# Khalti Payment View
+@login_required
+def khalti_payment(request, design_id):
+    design = get_object_or_404(Design, id=design_id)
+
+    # Khalti API setup and payment URL
+    khalti_payment_url = "https://khalti.com/#/home"  # replace with Khalti API URL
+    khalti_success_url = request.build_absolute_uri(f'/khalti-payment-success/{design_id}')
+    khalti_failure_url = request.build_absolute_uri(f'/khalti-payment-failure/{design_id}')
+
+    # Redirect user to Khalti's checkout page
+    return redirect(khalti_payment_url)
+
+# Handle payment success
+@login_required
+def payment_success(request, design_id, payment_method):
+    design = get_object_or_404(Design, id=design_id)
+    # Record the successful transaction
+    Transaction.objects.create(
+        design=design,
+        customer=request.user,
+        amount=design.price,
+        payment_method=payment_method,
+        status='completed'
+    )
+    return render(request, 'payment_success.html', {'design': design, 'payment_method': payment_method})
+
+# Handle payment failure
+@login_required
+def payment_failed(request, design_id, payment_method):
+    design = get_object_or_404(Design, id=design_id)
+    return render(request, 'payment_failed.html', {'design': design, 'payment_method': payment_method})
+
+
 
 @login_required
 def review_design(request, design_id):
